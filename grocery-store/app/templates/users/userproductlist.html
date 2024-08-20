@@ -1,0 +1,47 @@
+{%extends 'userbase.html' %} 
+
+{%block content%} 
+
+<div class="container mt-5">
+  <h2>Here is the list of products available in the store</h2>
+  <br>
+  {% for category in categories %}
+  <div class="card mb-4">
+      <div class="card-header">
+          <h2>{{ category }}</h2>
+      </div>
+      <div class="card-body">
+          <table class="table table-bordered">
+              <thead>
+                  <tr>
+                      <th>Name</th>
+                      <th>Quantity</th>
+                      <th>Price</th>
+                      <th>Expiry</th>
+                      <th>Action</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for product in categories[category] %}
+                  <tr>
+                      <td>{{product.name}}</td>
+                      <td>{{product.quantity}}</td>
+                      <td>{{product.price}}</td>
+                      <td>{{product.expiry}}</td>
+                      <td>
+                          {% if product.quantity > 0 %}
+                              <a href="{{ url_for('add_to_cart', productname=product.name) }}" class="btn btn-primary">Add to Cart</a>
+                          {% else %}
+                              Out of stock
+                          {% endif %}
+                      </td>
+                  </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+      </div>
+  </div>
+  {% endfor %}
+</div>
+
+{%endblock%} 

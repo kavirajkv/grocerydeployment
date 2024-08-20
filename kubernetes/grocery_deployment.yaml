@@ -1,0 +1,38 @@
+apiVersion : apps/v1
+kind : Deployment
+metadata :
+  name : grocery-store
+  labels :
+    app : grocerypsql
+spec :
+  replicas : 1
+  selector : 
+    matchLabels :
+      app : grocerypsql
+  template :
+    metadata :
+      labels :
+        app : grocerypsql
+    spec :
+      containers :
+      - name : grocerypsql 
+        image : grocerypsql:v1
+        ports :
+        - containerPort : 5000
+        env :
+        - name : POSTGRES_USER
+          valueFrom :
+            secretKeyRef :
+              name : pgsecret
+              key : username
+        - name : POSTGRES_PASSWORD
+          valueFrom :
+             secretKeyRef :
+              name : pgsecret
+              key : password
+        - name : url
+          valueFrom :
+            configMapKeyRef :
+              name : pg-config
+              key : datapath
+    

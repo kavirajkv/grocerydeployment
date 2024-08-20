@@ -1,0 +1,23 @@
+{% extends 'base.html' %} 
+
+{% block content %} 
+
+<h1>welcome to admin section</h1>
+<h3>want to add a category</h3>
+{% if messages %}
+<ul>
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+<form method="POST" >
+    {{ form.hidden_tag() }}
+    {{form.name.label}} {{form.name()}}
+    <br>
+    {{form.add()}}
+</form>
+
+
+
+{% endblock %} 

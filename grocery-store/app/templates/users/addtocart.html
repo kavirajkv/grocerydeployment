@@ -1,0 +1,41 @@
+{%extends 'userbase.html' %} 
+
+{%block content %} 
+
+
+<h2>{{product.name}}</h2>
+{% if messages %}
+<ul>
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        {%for pro in product %}
+        <tr>
+            <td>{{pro.name}}</td>
+            <td>{{pro.quantity}}</td>
+            <td>{{pro.price}}</td>
+        </tr>
+        {%endfor%}
+    </tbody>
+</table>
+
+<form method="POST" >
+    {{ form.hidden_tag() }}
+    {{form.quantity.label}} {{form.quantity()}}
+    <br>
+    {{form.submit()}}
+</form>
+
+
+{%endblock%} 

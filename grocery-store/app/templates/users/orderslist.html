@@ -1,0 +1,29 @@
+{%extends 'userbase.html' %} 
+
+{%block content %} 
+
+{%if orders!=none %}
+<h2>Here is the list of orders you did</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Order date</th>
+            <th scope="col">Order price</th>
+            <th scope="col">Order status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {%for order in orders%}
+        <tr>
+            <td>{{order.date}}</td>
+            <td>{{order.total}}</td>
+            <td>{{order.status}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{%else%}
+<h2>No orders found!, Make your first order and get flat 25% discount</h2>
+{%endif%}
+
+{%endblock%}

@@ -1,0 +1,46 @@
+{%extends 'userbase.html' %} 
+
+{%block content %} 
+
+<h2>Here is the list of products that you added to the cart</h2>
+<br>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if cartitems is not none %}
+        {% for product in cartitems %}
+        <tr>
+            <td>{{getproductname(product.product_id)}}</td>
+            <td>{{product.qty}}</td>
+            <td>{{product.price}}</td>
+            <td><a href="{{url_for('removefromcart',cart_id=product.cart_id)}}">Remove</a></td>
+            <td><a href="{{url_for('editcart',cart_id=product.cart_id)}}">Edit</a></td>
+        </tr>
+        {%endfor%}
+        {% endif %}
+    </tbody>
+    <tfoot>
+        <tr>
+          <td></td>
+          <td><h3>Total Price:</h3></td>
+          <td>{{ total_price }}</td>
+          <td></td>
+        </tr>
+      </tfoot>
+</table>
+
+<h3>
+    {% if cartitems is not none %}
+        Want to proceed to checkout: <a href="{{ url_for('makeorder') }}">Buy now</a>
+    {% else %}
+        Your cart is empty.
+    {% endif %}
+</h3>
+
+{%endblock%} 

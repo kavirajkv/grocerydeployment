@@ -1,0 +1,30 @@
+{% extends 'main.html'  %}
+
+{% block content %}
+
+
+<div class="container mt-5">
+    <div class="text-center">
+        <h1>"Your one-stop grocery wonderland!,</h1>
+        <h1>Where freshness meets convenience!"</h1>
+        <br>
+        <!-- Display messages if any -->
+        {% if messages %}
+        <!-- refer bootstrap alert documentation for details about this alert styling -->
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">  
+            <ul class="list-unstyled">
+                {% for message in messages %}
+                    <li><strong>{{ message }}</strong></li>
+                {% endfor %}
+            </ul>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
+        <br>
+        <h3>Sign in to unlock the speedy ordering : <a class="btn btn-primary" href="{{url_for('userloginpage')}}">Sign In</a></h3>
+        <h3>If you are new here please register here: <a class="btn btn-outline-primary" href="{{url_for('userregister')}}">Register</a></h3>
+    </div>
+</div>
+
+
+{% endblock %}

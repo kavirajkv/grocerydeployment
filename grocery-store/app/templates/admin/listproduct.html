@@ -1,0 +1,35 @@
+{% extends 'base.html' %} 
+
+{% block content %} 
+
+
+<h2>Here is the list of products available in the store</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Unit</th>
+            <th scope="col">Price</th>
+            <th scope="col">Expiry</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+        <tr>
+            <td>{{product.name}}</td>
+            <td>{{product.quantity_avail}}</td>
+            <td>{{product.unit}}</td>
+            <td>{{product.price_per_unit}}</td>
+            <td>{{product.expiry}}</td>
+        </tr>
+        {%endfor%}
+    </tbody>
+</table>
+
+
+
+
+
+
+{%endblock%}

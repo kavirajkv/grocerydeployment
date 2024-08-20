@@ -1,0 +1,19 @@
+{%extends 'userbase.html' %} 
+
+{%block content %} 
+
+<h2>Get FLAT 25% discount on your first order</h2>
+<h2>Here is the details of your order</h2>
+<br>
+<ol>
+    <li>Total price : {{total_price}}</li>
+    <li>Discount    : {{discount}}</li>
+    <li>Shipping   : {{shipping}}</li>
+</ol>
+<br>
+<h3>Total amount payable : {{total}}</h3>
+
+<h3>proceed to pay : <a href="{{url_for('makepayment',orderedid=orderid)}}">Pay now</a></h3>
+<h3>Cancel the order : <a href="{{url_for('cancelorder',orderedid=orderid)}}">Cancel</a></h3>
+
+{%endblock%} 

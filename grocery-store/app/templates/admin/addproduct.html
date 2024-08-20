@@ -1,0 +1,33 @@
+{% extends 'base.html' %} 
+
+{% block content %} 
+
+
+<h2>Want to add a new product</h2>
+{% if messages %}
+<ul>
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+<form method="POST" >
+    {{ form.hidden_tag() }}
+    {{form.name.label}} {{form.name()}}
+    <br>
+    {{form.quantity.label}} {{form.quantity()}}
+    <br>
+    {{form.unit.label}} {{form.unit()}}
+    <br>
+    {{form.priceperunit.label}} {{form.priceperunit()}}
+    <br>
+    {{form.expiry.label}} {{form.expiry()}}
+    <br>
+    {{form.category.label}} {{form.category()}}
+    <br>
+    {{form.submit()}}
+</form>
+
+
+
+{%endblock%}

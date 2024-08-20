@@ -1,0 +1,32 @@
+{% extends 'base.html' %} 
+
+{% block content %} 
+
+<div class="container mt-5">
+    <div class="text-center">
+        <h1>Welcome to Admin Section</h1>
+        <h3>Things you can do here</h3>
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <ul class="list-unstyled">
+                <li><a class="btn btn-primary" href="{{url_for('categorylist')}}">List categories</a></li>
+                <br>
+                <li><a class="btn btn-primary" href="{{url_for('categoryadd')}}">Add category</a></li>
+                <br>
+                <li><a class="btn btn-primary" href="{{url_for('categorydelete')}}">Remove category</a></li>
+                <br>
+                <li><a class="btn btn-primary" href="{{url_for('listproducts')}}">List products</a></li>
+                <br>
+                <li><a class="btn btn-primary" href="{{url_for('productadd')}}">Add product</a></li>
+                <br>
+                <li><a class="btn btn-primary" href="{{url_for('productdelete')}}">Delete product</a></li>
+                <br>
+                <li><a class="btn btn-primary" href="{{url_for('productupdate')}}">Update product</a></li>
+            </ul>
+        </div>
+        </div>
+
+</div>
+
+
+
+{% endblock %} 
