@@ -16,12 +16,12 @@ spec :
     spec :
       containers :
       - name : grocerypsql 
-        image : grocerypsql:v1
+        image : kavirajkv/grocerypsql:v1
         ports :
         - containerPort : 5000
         env :
         - name : POSTGRES_USER
-          valueFrom :
+          valueFrom : 
             secretKeyRef :
               name : pgsecret
               key : username
@@ -34,5 +34,20 @@ spec :
           valueFrom :
             configMapKeyRef :
               name : pg-config
-              key : datapath
+              key : dbpath
     
+---
+
+apiVersion : v1
+kind : Service
+metadata : 
+  name : grocery-service
+spec :
+  selector :
+    app : grocerypsql
+  type : LoadBalancer
+  ports : 
+    - protocol : TCP
+      port : 80
+      targetPort : 5000
+      nodePort : 30000
