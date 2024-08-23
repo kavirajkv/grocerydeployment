@@ -16,12 +16,12 @@ spec :
     spec :
       containers :
       - name : postgres
-        image : postgres
+        image : postgres:latest
         ports :
         - containerPort : 5432
         env :
         - name : POSTGRES_USER
-          valueFrom :
+          valueFrom : 
             secretKeyRef :
               name : pgsecret
               key : username
@@ -30,6 +30,8 @@ spec :
              secretKeyRef :
               name : pgsecret
               key : password
+        - name : POSTGRES_DB
+          value : testdata
 
 ---
 
