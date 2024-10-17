@@ -1,33 +1,50 @@
-pipeline{
+pipeline {
     agent any
-    stages{
-        stage("init"){
-            steps{
-                echo "initial stage"
+
+    environment {
+        DOCKER_CREDENTIALS = 'dockerhub-credential' 
+        DOCKER_IMAGE_NAME = 'jenkinstest'
+        IMAGE_TAG = "latest"
+    }
+
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git url: 'https://github.com/your-org/your-repo.git', branch: 'main'
             }
-           
         }
-        stage("test"){
-            steps{
-                echo "test"
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    dir('/grocery-store') {
+                        docker.build("${DOCKER_IMAGE_NAME}:${IMAGE_TAG}")
+                    }
+                }
             }
-        
         }
-        stage("build"){
-            steps{
-                echo "this is ${env.BRANCH_NAME}"
+
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: DOCKER_CREDENTIALS, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        sh "echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin"
+
+                        sh "docker tag ${DOCKER_IMAGE_NAME}:${IMAGE_TAG} $DOCKER_USERNAME/${DOCKER_IMAGE_NAME}:${IMAGE_TAG}"
+                        
+                        sh "docker push $DOCKER_USERNAME/${DOCKER_IMAGE_NAME}:${IMAGE_TAG}"
+                    }
+                }
             }
         }
     }
-    post{
-        always{
-            echo "finished"
+
+    post {
+        success {
+            echo 'Docker image built and pushed successfully!'
         }
-        success{
-            echo "its success"
-        }
-        failure{
-            echo "failed"
+        failure {
+            echo 'Pipeline failed!'
         }
     }
 }
