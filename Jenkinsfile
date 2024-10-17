@@ -16,9 +16,9 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh "cd grocery-store"
-                sh "ls"
-                // sh "docker build -t ${DOCKER_IMAGE_NAME}:${IMAGE_TAG} ."
+                sh '''cd grocery-store
+                    docker build -t ${DOCKER_IMAGE_NAME}:${IMAGE_TAG} .'''
+
                 sh "docker images"
                 sh "docker ps -a"
             }
