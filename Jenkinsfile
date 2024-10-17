@@ -24,15 +24,12 @@ pipeline {
         stage('pushing image to dockerhub'){
             steps{
                 script{
-                    def credentials = credentials('dockerhub-credential')
-                    def username = credentials.username
-                    def password = credentials.password
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub-credential', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                        sh "echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin"
 
-                    sh "docker login -u ${username} -p ${password}"
+                        sh "docker tag ${DOCKER_IMAGE_NAME}:${IMAGE_TAG} ${username}/${DOCKER_IMAGE_NAME}:${IMAGE_TAG}"
 
-                    sh "docker tag ${DOCKER_IMAGE_NAME}:${IMAGE_TAG} ${username}/${DOCKER_IMAGE_NAME}:${IMAGE_TAG}"
-
-                    sh "docker push ${username}/${DOCKER_IMAGE_NAME}:${IMAGE_TAG}"
+                        sh "docker push ${username}/${DOCKER_IMAGE_NAME}:${IMAGE_TAG}"
 
                 }    
             }
