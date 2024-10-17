@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     environment {
-        // DOCKER_CREDENTIALS = 'dockerhub-credential' 
         DOCKER_IMAGE_NAME = 'jenkinstest'
         IMAGE_TAG = "latest"
+        DOCKER_USERNAME=''
     }
 
     stages {
@@ -27,6 +27,8 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'dockerhub-credential', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
                         sh "echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin"
 
+                        env.DOCKER_USERNAME=${DOCKER_USERNAME}
+
                         sh "docker tag ${DOCKER_IMAGE_NAME}:${IMAGE_TAG} ${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:${IMAGE_TAG}"
 
                         sh "docker push ${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:${IMAGE_TAG}"
@@ -38,7 +40,7 @@ pipeline {
 
         stage('deleting the image'){
             steps{
-                sh "docker rmi kavirajkv/${DOCKER_IMAGE_NAME}"
+                sh "docker rmi ${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}"
                 sh "docker rmi ${DOCKER_IMAGE_NAME}"
             }
         }
