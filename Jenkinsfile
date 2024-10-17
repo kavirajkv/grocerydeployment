@@ -18,7 +18,7 @@ pipeline {
             steps {
                 script {
                     dir('/grocery-store') {
-                        docker.build("${DOCKER_IMAGE_NAME}:${IMAGE_TAG}")
+                        sh "docker build -t ${DOCKER_IMAGE_NAME}:${IMAGE_TAG} ."
                     }
                 }
             }
