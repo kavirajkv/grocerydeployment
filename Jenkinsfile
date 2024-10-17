@@ -49,9 +49,12 @@ pipeline {
 
         stage('clone the deployment repo'){
             steps{
-                git url: 'https://github.com/kavirajkv/grocery-cd.git', branch: 'main'
+                script{
+                    withCredentials([usernamePassword(credentialsId: 'github-credential', passwordVariable: 'PASS_TOKEN', usernameVariable: 'GITHUB_USER')]) {
+                        sh "git clone https://${GITHUB_USER}:${PASS_TOKEN}@github.com/kavirajkv/grocery-cd.git"
+                    }
+                }
             }
-
         }
 
         stage('update image name in CD repo'){
