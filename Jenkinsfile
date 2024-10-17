@@ -1,4 +1,3 @@
-def groovy
 pipeline{
     agent any
     stages{
