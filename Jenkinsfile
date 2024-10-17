@@ -39,11 +39,24 @@ pipeline {
             steps{
                 script{
                     withCredentials([usernamePassword(credentialsId: 'dockerhub-credential', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
-                        sh "docker rmi ${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}"
-                        sh "docker rmi ${DOCKER_IMAGE_NAME}"
+                        sh "docker rmi ${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:${IMAGE_TAG}"
+                        sh "docker rmi ${DOCKER_IMAGE_NAME}:${IMAGE_TAG}"
                     }
                 }
                 
+            }
+        }
+
+        stage('clone the deployment repo'){
+            steps{
+                git url: 'https://github.com/kavirajkv/grocery-cd.git', branch: 'main'
+            }
+
+        }
+
+        stage('update image name in CD repo'){
+            steps{
+                sh "ls"
             }
         }
     }
