@@ -30,6 +30,7 @@ pipeline {
                         sh "docker tag ${DOCKER_IMAGE_NAME}:${IMAGE_TAG} ${username}/${DOCKER_IMAGE_NAME}:${IMAGE_TAG}"
 
                         sh "docker push ${username}/${DOCKER_IMAGE_NAME}:${IMAGE_TAG}"
+                    }
 
                 }    
             }
