@@ -25,8 +25,8 @@ pipeline {
             steps{
                 script{
                     def credentials = credentials('dockerhub-credential')
-                    def username = credentials.split(':')[0]
-                    def password = credentials.split(':')[1]
+                    def username = credentials.username
+                    def password = credentials.password
 
                     sh "docker login -u ${username} -p ${password}"
 
