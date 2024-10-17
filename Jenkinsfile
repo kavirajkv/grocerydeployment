@@ -2,14 +2,14 @@ pipeline{
     agent any
     stages{
         stage("init"){
-            script{
-                groovy=load "script.groovy"
+            steps{
+                echo "initial stage"
             }
+           
         }
         stage("test"){
             steps{
                 echo "test"
-                groovy.hello()
             }
         
         }
@@ -27,7 +27,7 @@ pipeline{
             echo "its success"
         }
         failure{
-            echo "faild"
+            echo "failed"
         }
     }
 }
