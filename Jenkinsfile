@@ -3,7 +3,8 @@ pipeline {
 
     environment {
         DOCKER_IMAGE_NAME = 'jenkinstest'
-        IMAGE_TAG = "latest"
+        IMAGE_TAG = "${env.BUILD_NUMBER}"
+        DOCKER_USERNAME=''
     }
 
     stages {
@@ -26,6 +27,7 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'dockerhub-credential', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
                         sh "echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin"
 
+                        env.DOCKER_USERNAME="${DOCKER_USERNAME}"
 
                         sh "docker tag ${DOCKER_IMAGE_NAME}:${IMAGE_TAG} ${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:${IMAGE_TAG}"
 
@@ -38,6 +40,7 @@ pipeline {
 
         stage('deleting the image'){
             steps{
+                sh "docker rmi ${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}"
                 sh "docker rmi ${DOCKER_IMAGE_NAME}"
             }
         }
