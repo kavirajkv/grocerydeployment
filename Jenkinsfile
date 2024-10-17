@@ -17,8 +17,8 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 sh "echo `ls`"
-                sh "sudo docker images"
-                sh "sudo docker ps -a"
+                sh "docker images"
+                sh "docker ps -a"
             }
         }
     }
