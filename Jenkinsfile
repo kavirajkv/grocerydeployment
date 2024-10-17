@@ -16,28 +16,11 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                script {
-                    dir('/grocery-store') {
-                        sh "sudo docker build -t ${DOCKER_IMAGE_NAME}:${IMAGE_TAG} ."
-                    }
-                }
-            }
-        }
-
-        stage('Push Docker Image') {
-            steps {
-                script {
-                    withCredentials([usernamePassword(credentialsId: DOCKER_CREDENTIALS, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                        sh "echo $DOCKER_PASSWORD | sudo docker login -u $DOCKER_USERNAME --password-stdin"
-
-                        sh "sudo docker tag ${DOCKER_IMAGE_NAME}:${IMAGE_TAG} $DOCKER_USERNAME/${DOCKER_IMAGE_NAME}:${IMAGE_TAG}"
-                        
-                        sh "sudo docker push $DOCKER_USERNAME/${DOCKER_IMAGE_NAME}:${IMAGE_TAG}"
-                    }
-                }
+                sh "echo `ls`"
             }
         }
     }
+
 
     post {
         success {
