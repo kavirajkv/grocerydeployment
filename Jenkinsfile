@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git url: 'https://github.com/your-org/your-repo.git', branch: 'main'
+                git url: 'https://github.com/kavirajkv/grocerydeployment.git', branch: 'main'
             }
         }
 
