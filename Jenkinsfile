@@ -18,7 +18,7 @@ pipeline {
             steps {
                 script {
                     dir('/grocery-store') {
-                        sh "docker build -t ${DOCKER_IMAGE_NAME}:${IMAGE_TAG} ."
+                        sh "sudo docker build -t ${DOCKER_IMAGE_NAME}:${IMAGE_TAG} ."
                     }
                 }
             }
@@ -28,11 +28,11 @@ pipeline {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: DOCKER_CREDENTIALS, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                        sh "echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin"
+                        sh "echo $DOCKER_PASSWORD | sudo docker login -u $DOCKER_USERNAME --password-stdin"
 
-                        sh "docker tag ${DOCKER_IMAGE_NAME}:${IMAGE_TAG} $DOCKER_USERNAME/${DOCKER_IMAGE_NAME}:${IMAGE_TAG}"
+                        sh "sudo docker tag ${DOCKER_IMAGE_NAME}:${IMAGE_TAG} $DOCKER_USERNAME/${DOCKER_IMAGE_NAME}:${IMAGE_TAG}"
                         
-                        sh "docker push $DOCKER_USERNAME/${DOCKER_IMAGE_NAME}:${IMAGE_TAG}"
+                        sh "sudo docker push $DOCKER_USERNAME/${DOCKER_IMAGE_NAME}:${IMAGE_TAG}"
                     }
                 }
             }
