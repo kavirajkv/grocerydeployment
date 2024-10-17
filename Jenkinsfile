@@ -18,9 +18,21 @@ pipeline {
             steps {
                 sh '''cd grocery-store
                     docker build -t ${DOCKER_IMAGE_NAME}:${IMAGE_TAG} .'''
+            }
+        }
 
-                sh "docker images"
-                sh "docker ps -a"
+        stage('pushing image to dockerhub'){
+            steps{
+                sh "docker tag ${DOCKER_IMAGE_NAME}:${IMAGE_TAG} kavirajkv/${DOCKER_IMAGE_NAME}:${IMAGE_TAG}"
+
+                sh "docker push kavirajkv/${DOCKER_IMAGE_NAME}:${IMAGE_TAG}"
+            }
+        }
+
+        stage('deleting the image'){
+            steps{
+                sh "docker rmi kavirajkv/${DOCKER_IMAGE_NAME}"
+                sh "docker rmi ${DOCKER_IMAGE_NAME}"
             }
         }
     }
@@ -28,7 +40,7 @@ pipeline {
 
     post {
         success {
-            echo 'Docker image built and pushed successfully!'
+            echo 'Docker image built and pushed successfully and deleted image locally'
         }
         failure {
             echo 'Pipeline failed!'
