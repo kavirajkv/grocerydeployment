@@ -49,7 +49,7 @@ pipeline {
 
         stage('clone the deployment repo'){
             steps{
-                git url: 'https://github.com/kavirajkv/grocery-cd.git' , branch: 'main', credentialsid: 'github-credential'
+                git url: 'https://github.com/kavirajkv/grocery-cd.git' , branch: 'main', credentialsId: 'github-credential'
                 sh 'ls'
             }
         }
