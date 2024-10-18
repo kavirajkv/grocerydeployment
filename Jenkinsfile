@@ -72,11 +72,12 @@ pipeline {
                     }
                 }
 
-            }   
+            }  
 
         }
 
-
+    }
+    
     post {
         success {
             echo 'Docker image built and pushed successfully and deleted image locally'
