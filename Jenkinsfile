@@ -53,19 +53,28 @@ pipeline {
                 sh 'ls'
                 sh '''
                     cd kubernetes
-                    git config --global user.name "kavirajkv"
-                    git config --global user.email "kavirajk36kv@gmail.com"
                     sed -i "s/kavi.*/kavirajkv\\/${DOCKER_IMAGE_NAME}:${IMAGE_TAG}/" grocery_deployment.yaml
-                    git add .
-                    git commit -m "updated image name"
-                    git push origin main
                      '''
 
                 sh "successfully updated image name"
             }
         }
 
-    }
+        stage('push changes to repo'){
+            steps{
+                script{
+                    withCredentials([usernamePassword(credentialsId: 'github-credential', passwordVariable: 'PASS_TOKEN', usernameVariable: 'GITHUB_USER')]) {
+                        sh "git config --global user.name 'kavirajkv' "
+                        sh "git config --global user.email 'kavirajk36kv@gmail.com' "
+                        sh "ls -a"
+
+
+                    }
+                }
+
+            }   
+
+        }
 
 
     post {
