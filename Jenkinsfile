@@ -55,7 +55,7 @@ pipeline {
                     cd kubernetes
                     git config --global user.name "kavirajkv"
                     git congig --global user.email "kavirajk36kv@gmail.com"
-                    sed -i 's/kavi.*/kavirajkv\/${DOCKER_IMAGE_NAME}:${IMAGE_TAG}' grocery_deployment.yaml
+                    sed -i "s/kavi.*/kavirajkv\/${DOCKER_IMAGE_NAME}:${IMAGE_TAG}" grocery_deployment.yaml
                     git add .
                     git commit -m "updated image name"
                     git push origin main
