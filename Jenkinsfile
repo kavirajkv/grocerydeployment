@@ -56,7 +56,7 @@ pipeline {
                     sed -i "s/kavi.*/kavirajkv\\/${DOCKER_IMAGE_NAME}:${IMAGE_TAG}/" grocery_deployment.yaml
                      '''
 
-                sh "successfully updated image name"
+                echo "successfully updated image name"
             }
         }
 
