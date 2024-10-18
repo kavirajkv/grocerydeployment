@@ -66,8 +66,9 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'github-credential', passwordVariable: 'PASS_TOKEN', usernameVariable: 'GITHUB_USER')]) {
                         sh "git config --global user.name 'kavirajkv' "
                         sh "git config --global user.email 'kavirajk36kv@gmail.com' "
-                        sh "ls -a"
-
+                        sh "git add ."
+                        sh "git commit -m 'new image with tag ${IMAGE_TAG} is updated' "
+                        sh "git push https://${GITHUB_USER}:${PASS_TOKEN}@github.com/kavirajkv/grocery-cd.git main"
 
                     }
                 }
